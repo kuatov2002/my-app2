@@ -1,0 +1,156 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+}
+form {
+    margin-top: 300px;
+    display: flex;
+    flex-direction:row;
+    padding: 8px 10px;
+    gap: 10px;
+    width: 1066px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+}
+#left,#right{
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    margin: 0 40px;
+}
+#category,#puts,#input,#output,#somet,.alltags,#difficulty,.feature{
+    display: flex;
+    margin: auto 0;
+}
+.feature{
+    justify-content: space-between;
+}
+.feature p{
+    font-weight: 500;
+    
+}
+p {
+    font-size: 25px;
+    color: black;
+    font-weight: 500;
+    margin: auto 6px;
+    margin-left: 0;
+}
+
+#addon{
+    font-size: 14px;
+    color: #7c7c7c;
+}
+
+.tag{
+    background-color: #2E683B;
+    border-radius: 25px;
+    padding: 8px 10px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    margin-right: 30px;
+    display: flex;
+    width: 120px;
+    justify-content: space-between;
+}
+.tag p{
+    font-size: 20px;
+    color: white;
+    margin-left: 3px;
+}
+.tag img{
+    margin-right: 7px;
+}
+
+#tags {
+    display: flex;
+}
+#tags button{
+    background: #58AE6B;
+    margin-right: 5px;
+}
+
+#tags .tag p{
+    font-size: 16px;
+}
+
+h2{
+    margin: auto 7px;
+}
+.switch{
+    margin: auto 0px;
+    display: flex;
+}
+
+button p{
+    color: white;
+}
+
+
+/* Slider */
+.slider {
+    position: absolute;
+    width: 25px;
+    height: 300px;
+    left: 220px;
+    top: 240px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+  
+  /* Line */
+  .line {
+    position: absolute;
+    width: 240px;
+    height: 4px;
+    left: 15px;
+    top: 80px;
+    border: 1px solid #ECEBEB;
+    background-color: #ECEBEB;
+    transform-origin: left top;
+    transform: rotate(90deg);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+  
+  /* Ellipse */
+  .ellipse {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 0;
+    background: #ECEBEB;
+    border-radius: 50%;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+  
+  /* Positioning of ellipses */
+  .ellipse:nth-child(2) {
+    top: 79px;
+  }
+  
+  .ellipse:nth-child(3) {
+    top: 157px;
+  }
+  
+  .ellipse:nth-child(4) {
+    top: 235px;
+  }
+  
+  .ellipse:nth-child(5) {
+    top: 313px;
+  }
+  .inner-circle {
+    position: absolute;
+    width: 15px; /* Размер круга */
+    height: 15px; /* Размер круга */
+    background: #2E683B;
+    border-radius: 50%; /* Делает круг */
+    top: 50%; /* Центрирование по вертикали */
+    left: 50%; /* Центрирование п   о горизонтали */
+    transform: translate(-50%, -50%); /* Центрирует по центру эллипса */
+  }
+  
