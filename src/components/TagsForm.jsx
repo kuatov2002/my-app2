@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './TagsForm.css';
+import React, { useState, useEffect, useRef } from 'react';
+import styles from'./TagsForm.css';
 import './FilterDropdown.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -294,7 +294,7 @@ const CrossIcon = ({ onClick = (event) => event.currentTarget.parentNode.remove(
 );
 
 const TagsForm = () => {
-
+  const formRef = useRef(null);
     const location = useLocation();
     const task = location.state?.input || '';
     const navigate = useNavigate();
@@ -355,6 +355,7 @@ const TagsForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log('Loading...');
     e.preventDefault();
     const input = {
       Topic: topic,
@@ -368,14 +369,26 @@ const TagsForm = () => {
       JoinData: '0',
       ConditionProblem: '1'
     };
-  
-    navigate('/Suggestions', { state: { input } });
+    const sendRequest = async () => {
+      try {
+        const response = await axios.post('api/find_similar_problems', {
+          input: input
+        });
+        const responseData = response.data;
+        console.log(response.data);
+        navigate('/Suggestions', { state: { responseData } });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    sendRequest();
+    
   };
 
 
   return (
     
-    <div className="container">
+    <div className='TagsForm'>
       <div class="slider">
         <div class="line"></div>
         <div class="ellipse">
@@ -388,7 +401,7 @@ const TagsForm = () => {
         <div class="ellipse"></div>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit} className='Tags'>
         <div id="left">
           <div id="category">
             <p>Main Topic</p>
@@ -482,8 +495,13 @@ const TagsForm = () => {
             <p>Related to the condition</p> <BasicSwitch boolInt={0} />
           </div>
         </div>
-        <button type="submit"></button>
+        
       </form>
+      <div className="buttons">
+      <button type="button" className='Back' onClick={() =>navigate('/Input')}>{'<'}- Back</button>
+      <button type="button" onClick={() => formRef.current.requestSubmit()} className='Go'>Go -{'>'}</button>
+      </div>
+      
     </div>
   );
 };

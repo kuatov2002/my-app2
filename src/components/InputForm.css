@@ -8,7 +8,7 @@ html {
     font-family: 'Inter', sans-serif;
 }
 
-.container {
+.InputForm {
     margin-top: 200px;
     /* Измените это значение по вашему усмотрению */
 }
@@ -31,12 +31,13 @@ textarea {
     resize: none;
 }
 
-form {
+form.input{
+    margin-top: 300px;
     display: flex;
     flex-direction: column;
     padding: 8px 10px;
     gap: 10px;
-    width: 1066px;
+    width: 1266px;
     /* height: 225px;  */
     background: #FFFFFF;
     border-radius: 8px;
@@ -44,71 +45,45 @@ form {
     font-style: normal;
 }
 
-p {
-    font-size: 16px;
+p.input {
+    font-size: 24px;
     color: #2E683B;
     font-weight: 500;
     font-weight: bold;
+    margin-bottom: 15px;
+}
+#length{
+  align-self: flex-end;
+  font-size: 16px;
 }
 
-.slider {
-    position: absolute;
-    width: 25px;
-    height: 300px;
-    left: 220px;
-    top: 240px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
   
-  /* Line */
-  .line {
-    position: absolute;
-    width: 240px;
-    height: 4px;
-    left: 15px;
-    top: 80px;
-    border: 1px solid #ECEBEB;
-    background-color: #ECEBEB;
-    transform-origin: left top;
-    transform: rotate(90deg);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  button.SetParam {
+    align-self: center;
+    width: 241px;
+    height: 57px;
+    left: 513px;
+    top: 552px;
+
+    border-radius: 35px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    border: none;
   }
-  
-  /* Ellipse */
-  .ellipse {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    left: 0;
-    background: #ECEBEB;
-    border-radius: 50%;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  .greenButton {
+    background-color: #2E683B;
   }
-  
-  /* Positioning of ellipses */
-  .ellipse:nth-child(2) {
-    top: 79px;
+
+  .grayButton{
+    background-color: #7C7C7C;
   }
-  
-  .ellipse:nth-child(3) {
-    top: 157px;
+
+  #length{
+    color: black;
   }
-  
-  .ellipse:nth-child(4) {
-    top: 235px;
-  }
-  
-  .ellipse:nth-child(5) {
-    top: 313px;
-  }
-  .inner-circle {
-    position: absolute;
-    width: 15px; /* Размер круга */
-    height: 15px; /* Размер круга */
-    background: #2E683B;
-    border-radius: 50%; /* Делает круг */
-    top: 50%; /* Центрирование по вертикали */
-    left: 50%; /* Центрирование п   о горизонтали */
-    transform: translate(-50%, -50%); /* Центрирует по центру эллипса */
-  }
-  

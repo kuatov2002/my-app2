@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import './Suggestions.css'
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -13,7 +14,8 @@ const ProblemCardContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   padding: 20px;
-  margin: auto 20px;
+  margin-right: 20px;
+  margin-left: 20px;
   width: 100%;
   max-width: 800px; // Устанавливаем максимальную ширину для адаптивности
 `;
@@ -130,61 +132,83 @@ const DifficultyText = styled.span`
 `;
 
 // Компонент карточки проблемы
-const ProblemCard = ({ difficulty, title, description, category, tags, similarity }) => (
-  <ProblemCardContainer>
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <ProblemTitle>{title}</ProblemTitle>
-      <DifficultyTag difficulty={difficulty}>
-        <DifficultyText>{difficulty}</DifficultyText>
-      </DifficultyTag>
-    </div>
+const ProblemCard = ({ difficulty, title, description, category, tags, similarity,taskid }) => {
+  const navigate = useNavigate(); // Перемещение внутри компонента
+  return (
+    <ProblemCardContainer>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <ProblemTitle>{title}</ProblemTitle>
+        <DifficultyTag difficulty={difficulty}>
+          <DifficultyText>{difficulty}</DifficultyText>
+        </DifficultyTag>
+      </div>
 
-    <ProblemDescription>{description}</ProblemDescription>
-    <CategoryAndTags>
-      <Category>{category}</Category>
+      <ProblemDescription>{description}</ProblemDescription>
+      <CategoryAndTags>
+        <Category>{category}</Category>
 
-    </CategoryAndTags>
-    <TagsContainer>
-      Tags:
-      {tags.map((tag, index) => (
-        <Tag key={index}>
-          <TagText>{tag}</TagText>
-        </Tag>
-      ))}
-    </TagsContainer>
-    <SimilarityAndButton>
-      <Similarity>{`${similarity}% similarity`}</Similarity>
-      <Button>Show solution &rarr;</Button>
-    </SimilarityAndButton>
-  </ProblemCardContainer>
-);
+      </CategoryAndTags>
+      <TagsContainer>
+        Tags:
+        {tags.map((tag, index) => (
+          <Tag key={index}>
+            <TagText>{tag}</TagText>
+          </Tag>
+        ))}
+      </TagsContainer>
+      <SimilarityAndButton>
+        <Similarity>{`${similarity}% similarity`}</Similarity>
+        <Button  onClick={() =>navigate('/Base/'+taskid)}>Show solution &rarr;</Button>
+      </SimilarityAndButton>
+    </ProblemCardContainer>
+  );
+};
 
 // Компонент приложения
 const Suggestions = () => {
+  const navigate = useNavigate();
   const data = useLocation();
-  const tags = data.state?.input || '';
+  const tags = data.state?.responseData || '';
   console.log(tags);
+  var responseData;
 
-  useEffect(() => {
-    const sendRequest = async () => {
-      try {
-        const response = await axios.post('api/find_similar_problems', {
-          input: tags
-        });
-        const responseData = response.data;
-        console.log(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    sendRequest();
-
-  }, []);
 
   return (
-    <div style={{ margin: '300px 200px' }}>
-      <div style={{ display: 'flex' }}>
-        <ProblemCard
+    <div style={{ margin: '300px 200px' }} className='Suggestions'>
+      <div class="slider">
+        <div class="line"></div>
+        <div class="ellipse">
+
+        </div>
+        <div class="ellipse">
+
+        </div>
+        <div class="ellipse">
+          <div class="inner-circle"></div>
+        </div>
+        <div class="ellipse"></div>
+      </div>
+      <div style={{ display: 'flex', marginBottom: 56 }}>
+        {tags.map((problem, index) => {
+          let description = problem.description.substring(0, 250);
+          if (problem.description.length > 250) {
+            description += ' . . .';
+          }
+          return (
+            <ProblemCard
+              key={index}
+              difficulty='Hard'
+              title={problem.title}
+              description={description}
+              category="Category: Graph algorithms"
+              tags={['graph', 'tree', 'set']}
+              similarity={problem.similarityScore}
+              taskid={problem.problemId}
+            />
+          );
+        })}
+
+        {/* <ProblemCard
           difficulty="easy"
           title="Sort an Array"
           description="Given a binary tree. Need to return a list of tree levels, where each odd level is represented by a list of values of nodes traversed from left to right, and each even level is represented by a list of values of nodes traversed from right to left."
@@ -207,13 +231,14 @@ const Suggestions = () => {
           category="Category: Graph algorithms"
           tags={['graph', 'tree', 'set']}
           similarity={78}
-        />
+        /> */}
       </div>
       {/* Кнопки навигации */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <Button style={{ backgroundColor: '#58ae6b' }}>&larr; Back</Button>
-        <Button>Go &rarr;</Button>
+      <div className="buttons">
+        <button type="button" className='Back' onClick={() => navigate('/Tags')}>{'<'}- Back</button>
+        <button type="button" className='Go' onClick={() => navigate('/Overall')}>Go -{'>'}</button>
       </div>
+
     </div>
   );
 };
