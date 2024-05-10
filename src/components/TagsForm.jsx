@@ -312,7 +312,11 @@ const TagsForm = () => {
         setInput(responseData.input);
         setOutput(responseData.output);
         setTags(responseData.keywords);
-
+        setDataInter(responseData.binary[0]);
+        setCount(responseData.binary[1]);
+        setFew(responseData.binary[2]);
+        setJoin(responseData.binary[3]);
+        setRelate(responseData.binary[4]);
 
 
       } catch (error) {
@@ -331,9 +335,34 @@ const TagsForm = () => {
   const diffIndex = diffArray.indexOf(difficulty);
   const [inputName, setInput] = useState('');
   const [outputName, setOutput] = useState('');
+  const [DataInter, setDataInter] = useState('');
+  const [Count, setCount] = useState('');
+  const [Few, setFew] = useState('');
+  const [Join, setJoin] = useState('');
+  const [Relate, setRelate] = useState('');
 
   const [tags, setTags] = useState([]); // Инициализируем состояние с начальным массивом тегов
   // ... другой код
+
+  const handleDataInterChange = (value) => {
+    setDataInter(value ? '1' : '0');
+  };
+
+  const handleCountChange = (value) => {
+    setCount(value ? '1' : '0');
+  };
+
+  const handleFewChange = (value) => {
+    setFew(value ? '1' : '0');
+  };
+
+  const handleJoinChange = (value) => {
+    setJoin(value ? '1' : '0');
+  };
+
+  const handleRelateChange = (value) => {
+    setRelate(value ? '1' : '0');
+  };
 
   const handleAddTag = (some) => {
     // Добавляем новый тег в массив
@@ -363,11 +392,11 @@ const TagsForm = () => {
       Input: inputName,
       Output: outputName,
       Difficulty: difficulty,
-      DataNotInteract: '1', // Передаем строковые значения
-      CountingRelated: '0',
-      FewKManyV: '1',
-      JoinData: '0',
-      ConditionProblem: '1'
+      DataNotInteract: DataInter, // Передаем строковые значения
+      CountingRelated: Count,
+      FewKManyV: Few,
+      JoinData: Join,
+      ConditionProblem: Relate
     };
     const sendRequest = async () => {
       try {
@@ -376,7 +405,8 @@ const TagsForm = () => {
         });
         const responseData = response.data;
         console.log(response.data);
-        navigate('/Suggestions', { state: { responseData } });
+        console.log(input);
+        navigate('/Suggestions', { state: { responseData, input,task } });
       } catch (error) {
         console.error(error);
       }
@@ -480,19 +510,19 @@ const TagsForm = () => {
         <div id="right">
           <h1>MapReduce Classification</h1>
           <div className="feature">
-            <p>Data not interact</p> <BasicSwitch boolInt={1} />
+            <p>Data not interact</p> <BasicSwitch boolInt={DataInter} onChange={handleDataInterChange}/>
           </div>
           <div className="feature">
-            <p>Counting Related</p> <BasicSwitch boolInt={0} />
+            <p>Counting Related</p> <BasicSwitch boolInt={Count} onChange={handleCountChange}/>
           </div>
           <div className="feature">
-            <p>Few keys many values</p> <BasicSwitch boolInt={1} />
+            <p>Few keys many values</p> <BasicSwitch boolInt={Few} onChange={handleFewChange}/>
           </div>
           <div className="feature">
-            <p>Joining Data</p> <BasicSwitch boolInt={0} />
+            <p>Joining Data</p> <BasicSwitch boolInt={Join} onChange={handleJoinChange}/>
           </div>
           <div className="feature">
-            <p>Related to the condition</p> <BasicSwitch boolInt={0} />
+            <p>Related to the condition</p> <BasicSwitch boolInt={Relate} onChange={handleRelateChange}/>
           </div>
         </div>
         

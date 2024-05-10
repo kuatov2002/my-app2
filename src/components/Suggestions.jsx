@@ -1,12 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import './Suggestions.css'
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useLocation,useNavigate } from 'react-router-dom';
 
-
-// Контейнер для карточки проблемы
 const ProblemCardContainer = styled.div`
   display:flex;
   flex-direction:column;
@@ -63,7 +59,7 @@ const Tag = styled.div`
   background-color: #58ae6b;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-  padding: 2px 10px;
+  padding: 3px 10px;
   margin: 3px 5px;
 `;
 
@@ -110,9 +106,9 @@ const Button = styled.button`
 // Тег сложности
 const DifficultyTag = styled.div`
   background-color: ${props =>
-    props.difficulty === 'easy'
+    props.difficulty === 'Easy'
       ? '#58ae6b'
-      : props.difficulty === 'medium'
+      : props.difficulty === 'Medium'
         ? '#ebca56'
         : '#cd5656'};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -120,6 +116,7 @@ const DifficultyTag = styled.div`
   padding: 2px 10px;
   height:20px;
   margin: auto 10px;
+  margin-top:3px;
 `;
 
 // Текст сложности
@@ -129,7 +126,7 @@ const DifficultyText = styled.span`
   font-size: 14px;
   color: #ffffff;
   text-transform: capitalize; // Делаем первую букву заглавной
-`;
+`;  
 
 // Компонент карточки проблемы
 const ProblemCard = ({ difficulty, title, description, category, tags, similarity,taskid }) => {
@@ -145,7 +142,7 @@ const ProblemCard = ({ difficulty, title, description, category, tags, similarit
 
       <ProblemDescription>{description}</ProblemDescription>
       <CategoryAndTags>
-        <Category>{category}</Category>
+        <Category>Category: {category}</Category>
 
       </CategoryAndTags>
       <TagsContainer>
@@ -168,10 +165,12 @@ const ProblemCard = ({ difficulty, title, description, category, tags, similarit
 const Suggestions = () => {
   const navigate = useNavigate();
   const data = useLocation();
-  const tags = data.state?.responseData || '';
+  const tasks = data.state?.responseData || '';
+  const tags = data.state?.input || '';
+  const task = data.state?.task|| '';
+  console.log(tasks);
   console.log(tags);
-  var responseData;
-
+  console.log(task);
 
   return (
     <div style={{ margin: '300px 200px' }} className='Suggestions'>
@@ -189,7 +188,7 @@ const Suggestions = () => {
         <div class="ellipse"></div>
       </div>
       <div style={{ display: 'flex', marginBottom: 56 }}>
-        {tags.map((problem, index) => {
+        {tasks.map((problem, index) => {
           let description = problem.description.substring(0, 250);
           if (problem.description.length > 250) {
             description += ' . . .';
@@ -197,46 +196,21 @@ const Suggestions = () => {
           return (
             <ProblemCard
               key={index}
-              difficulty='Hard'
+              difficulty={problem.similarityScore}
               title={problem.title}
               description={description}
-              category="Category: Graph algorithms"
-              tags={['graph', 'tree', 'set']}
-              similarity={problem.similarityScore}
+              category={problem.difficulty}
+              tags={problem.topic.replaceAll(' ','').split(',')}
+              similarity={problem.keywords}
               taskid={problem.problemId}
             />
           );
         })}
 
-        {/* <ProblemCard
-          difficulty="easy"
-          title="Sort an Array"
-          description="Given a binary tree. Need to return a list of tree levels, where each odd level is represented by a list of values of nodes traversed from left to right, and each even level is represented by a list of values of nodes traversed from right to left."
-          category="Category: Graph algorithms"
-          tags={['graph', 'tree', 'set']}
-          similarity={93}
-        />
-        <ProblemCard
-          difficulty="medium"
-          title="Sort an Array"
-          description="Given a binary tree. Need to return a list of tree levels, where each odd level is represented by a list of values of nodes traversed from left to right, and each even level is represented by a list of values of nodes traversed from right to left."
-          category="Category: Graph algorithms"
-          tags={['graph', 'tree', 'set']}
-          similarity={88}
-        />
-        <ProblemCard
-          difficulty="difficult"
-          title="Sort an Array"
-          description="Given a binary tree. Need to return a list of tree levels, where each odd level is represented by a list of values of nodes traversed from left to right, and each even level is represented by a list of values of nodes traversed from right to left."
-          category="Category: Graph algorithms"
-          tags={['graph', 'tree', 'set']}
-          similarity={78}
-        /> */}
       </div>
-      {/* Кнопки навигации */}
       <div className="buttons">
         <button type="button" className='Back' onClick={() => navigate('/Tags')}>{'<'}- Back</button>
-        <button type="button" className='Go' onClick={() => navigate('/Overall')}>Go -{'>'}</button>
+        <button type="button" className='Go' onClick={() => navigate('/Overall', { state: { tasks,tags,task } })}>Go -{'>'}</button>
       </div>
 
     </div>
