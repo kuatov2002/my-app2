@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from'./TagsForm.css';
+import './TagsForm.css';
 import './FilterDropdown.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -298,34 +298,30 @@ const TagsForm = () => {
     const location = useLocation();
     const task = location.state?.input || '';
     const navigate = useNavigate();
-    var response;
-  useEffect(() => {
-    const sendRequest = async () => {
-      try {
-        response = await axios.post('api/classify', {
-          input: task
-        });
-        const responseData = response.data;
-        console.log(responseData);
-        setTopic(responseData.topic);
-        setDifficulty(responseData.difficulty);
-        setInput(responseData.input);
-        setOutput(responseData.output);
-        setTags(responseData.keywords);
-        setDataInter(responseData.binary[0]);
-        setCount(responseData.binary[1]);
-        setFew(responseData.binary[2]);
-        setJoin(responseData.binary[3]);
-        setRelate(responseData.binary[4]);
-
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    sendRequest();
-
-  }, []);
+    useEffect(() => {
+      const sendRequest = async () => {
+        try {
+          const response = await axios.post('api/classify', {
+            input: task
+          });
+          const responseData = response.data;
+          console.log(responseData);
+          setTopic(responseData.topic);
+          setDifficulty(responseData.difficulty);
+          setInput(responseData.input);
+          setOutput(responseData.output);
+          setTags(responseData.keywords);
+          setDataInter(responseData.binary[0]);
+          setCount(responseData.binary[1]);
+          setFew(responseData.binary[2]);
+          setJoin(responseData.binary[3]);
+          setRelate(responseData.binary[4]);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      sendRequest();
+    }, [task]); // Add task to the dependency array
 
 
 

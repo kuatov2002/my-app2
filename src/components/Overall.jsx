@@ -93,7 +93,7 @@ const Overall = () => {
           <h2>MapReduce Analyses</h2>
           <div className="analyses">
             {Object.entries(tags).map(([key, value]) => {
-              if (value == '1') {
+              if (value === '1'||value===1) {
                 return (
                   <p key={key}><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8.345 15.895C12.4015 15.895 15.69 12.5606 15.69 8.44752C15.69 4.33437 12.4015 1 8.345 1C4.28847 1 1 4.33437 1 8.44752C1 12.5606 4.28847 15.895 8.345 15.895Z" stroke="black" strokeWidth="1.84" strokeLinecap="round" strokeLinejoin="round" />
