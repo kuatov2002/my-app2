@@ -300,7 +300,7 @@ const TagsForm = () => {
     useEffect(() => {
       const sendRequest = async () => {
         try {
-          const response = await axios.post('https://algoanalysesdeploym-production.up.railway.app/classify', {
+          const response = await axios.post('https://sublime-spontaneity-production.up.railway.app/classify', {
             input: task
           });
           const responseData = response.data;
