@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import base from'./base.png'
 
 const App = () => {
+  const BaseURL='https://algoanalysesdeploym-production.up.railway.app';
   return (
     
     <BrowserRouter>

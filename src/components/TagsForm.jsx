@@ -18,7 +18,7 @@ import { useSwitch } from '@mui/base/useSwitch';
 import axios from 'axios';
 
 import Popper from '@mui/material/Popper';
-
+import BaseURL from '../App'
 const FilterDropdown = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedTopics, setExpandedTopics] = useState(false);
@@ -301,7 +301,7 @@ const TagsForm = () => {
     useEffect(() => {
       const sendRequest = async () => {
         try {
-          const response = await axios.post('api/classify', {
+          const response = await axios.post(`${BaseURL}/classify`, {
             input: task
           });
           const responseData = response.data;
@@ -396,7 +396,7 @@ const TagsForm = () => {
     };
     const sendRequest = async () => {
       try {
-        const response = await axios.post('api/find_similar_problems', {
+        const response = await axios.post(`${BaseURL}/find_similar_problems`, {
           input: input
         });
         const responseData = response.data;
