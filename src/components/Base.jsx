@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Base.css';
 import { Pagination, Stack, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import axios from 'axios';
-import BaseURL from '../App'
 const Base = () => {
     const [problems, setProblems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -10,7 +9,7 @@ const Base = () => {
     useEffect(() => {
         const fetchProblems = async () => {
             try {
-                const response = await axios.post(`${BaseURL}/find_All_Paginated`, {
+                const response = await axios.post('https://algoanalysesdeploym-production.up.railway.app/find_All_Paginated', {
                     input: { page: currentPage, size: 5 },
                 });
                 const responseData = response.data;
