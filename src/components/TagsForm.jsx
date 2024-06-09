@@ -300,7 +300,7 @@ const TagsForm = () => {
     useEffect(() => {
       const sendRequest = async () => {
         try {
-          const response = await axios.post('https://algoanalysesdeploym-production.up.railway.app/classify', {
+          const response = await axios.post('https://algoanalysesdeploym-production-2364.up.railway.app/classify', {
             input: task
           });
           const responseData = response.data;
@@ -395,7 +395,7 @@ const TagsForm = () => {
     };
     const sendRequest = async () => {
       try {
-        const response = await axios.post('https://algoanalysesdeploym-production.up.railway.app/find_similar_problems', {
+        const response = await axios.post('https://algoanalysesdeploym-production-2364.up.railway.app/find_similar_problems', {
           input: input
         });
         const responseData = response.data;
