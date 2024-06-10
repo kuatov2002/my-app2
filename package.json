@@ -26,7 +26,8 @@
     "start": "node --max-old-space-size=4096 node_modules/react-scripts/scripts/start.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "log-start": "node --max-old-space-size=4096 node_modules/react-scripts/scripts/start.js > log.txt 2>&1"
   },
   "eslintConfig": {
     "extends": [
